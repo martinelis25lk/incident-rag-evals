@@ -1,0 +1,15 @@
+﻿fastapi
+uvicorn
+pydantic
+pydantic-settings
+python-dotenv
+python-frontmatter
+langchain-core
+langchain-text-splitters
+langchain-huggingface
+langchain-google-genai
+langchain-postgres
+psycopg[binary]
+rank-bm25
+sentence-transformers
+ragas

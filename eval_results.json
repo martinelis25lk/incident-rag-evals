@@ -1,0 +1,94 @@
+{
+  "summary": {
+    "faithfulness": 0.9583,
+    "answer_relevancy": NaN,
+    "context_precision": 0.4167,
+    "samples_count": 6
+  },
+  "details": [
+    {
+      "user_input": "What caused the global 502 Bad Gateway outage at Cloudflare in July 2019?",
+      "retrieved_contexts": [
+        "# Cloudflare Global Network Outage (July 2019)  \n## Summary\nOn July 2, 2019, Cloudflare experienced a global outage lasting 27 minutes, resulting in 502 Bad Gateway errors across all edge locations worldwide. The incident was caused by a single misconfigured Web Application Firewall (WAF) rule deployed globally.",
+        "---\ncompany: Cloudflare\ndate: 2019-07-02\ncomponent: WAF / Regex Engine\nseverity: Critical\nduration_minutes: 27\n---",
+        "## Timeline\n- 13:42 UTC: WAF rule update deployed globally without staged rollout.\n- 13:45 UTC: Edge CPU utilization reached 100%; global HTTP 502 errors began.\n- 14:00 UTC: Root cause isolated to the newly deployed WAF rule set.\n- 14:09 UTC: Global WAF kill-switch activated; traffic recovered completely.",
+        "## Root Cause\nAn engineer deployed a new WAF managed rule intended to block inline JavaScript XSS attacks. The rule contained a poorly written regular expression ((?:(?:\\\"|'|\\]|\\}|\\\\|\\d|(?:nan|infinity|true|false|null|undefined|symbol|math)|\\|\\-|\\+)+[)]*;?((?:\\s|-|~|!|{}|\\|\\||\\+)*.*(?:.*=.*)))) that triggered catastrophic backtracking when evaluating specific HTTP payloads. This caused CPU utilization across all Cloudflare edge servers to spike to 100%, starving NGINX worker processes."
+      ],
+      "response": "Based on the provided excerpts, the global 502 Bad Gateway outage was caused by a single misconfigured Web Application Firewall (WAF) rule deployed globally. \n\nSpecifically, an engineer deployed a new WAF managed rule (intended to block inline JavaScript XSS attacks) containing a poorly written regular expression that triggered catastrophic backtracking when evaluating specific HTTP payloads. This caused CPU utilization across all Cloudflare edge servers to spike to 100%, starving NGINX worker processes.",
+      "reference": "A newly deployed WAF managed rule contained a poorly written regular expression that triggered catastrophic backtracking, causing edge server CPU utilization to spike to 100% and starving NGINX workers.",
+      "faithfulness": 1.0,
+      "answer_relevancy": NaN,
+      "context_precision": 0.4166666666458333
+    },
+    {
+      "user_input": "How long did the Cloudflare July 2019 outage last and how was it resolved?",
+      "retrieved_contexts": [
+        "# Cloudflare Global Network Outage (July 2019)  \n## Summary\nOn July 2, 2019, Cloudflare experienced a global outage lasting 27 minutes, resulting in 502 Bad Gateway errors across all edge locations worldwide. The incident was caused by a single misconfigured Web Application Firewall (WAF) rule deployed globally.",
+        "---\ncompany: Cloudflare\ndate: 2019-07-02\ncomponent: WAF / Regex Engine\nseverity: Critical\nduration_minutes: 27\n---",
+        "## Root Cause\nAn engineer deployed a new WAF managed rule intended to block inline JavaScript XSS attacks. The rule contained a poorly written regular expression ((?:(?:\\\"|'|\\]|\\}|\\\\|\\d|(?:nan|infinity|true|false|null|undefined|symbol|math)|\\|\\-|\\+)+[)]*;?((?:\\s|-|~|!|{}|\\|\\||\\+)*.*(?:.*=.*)))) that triggered catastrophic backtracking when evaluating specific HTTP payloads. This caused CPU utilization across all Cloudflare edge servers to spike to 100%, starving NGINX worker processes.",
+        "## Timeline\n- 17:20 UTC: Heavy database load caused replication lag to exceed threshold; replica dropped out of sync.\n- 23:00 UTC: Engineer wiped the pgdata directory on db1 by mistake, deleting ~300 GB of live data.\n- 23:15 UTC: Backup audit revealed pg_dump was failing silently due to binary version mismatch (9.2 vs 9.6).\n- 03:30 UTC (Feb 1): Recovery initiated from a 6-hour-old LVM snapshot taken manually before maintenance."
+      ],
+      "response": "Based on the provided excerpts, the Cloudflare outage lasted **27 minutes**. The provided text does not contain information on how the incident was resolved.",
+      "reference": "The outage lasted 27 minutes and was resolved by activating the global WAF kill-switch at 14:09 UTC.",
+      "faithfulness": 1.0,
+      "answer_relevancy": NaN,
+      "context_precision": 0.0
+    },
+    {
+      "user_input": "Why did GitLab lose 6 hours of production database data in January 2017?",
+      "retrieved_contexts": [
+        "# GitLab.com Production Database Outage (January 2017)  \n## Summary\nOn January 31, 2017, GitLab.com suffered an 18-hour outage accompanied by the permanent loss of approximately 6 hours of production database data (issues, merge requests, and comments) after an engineer accidentally deleted the primary PostgreSQL data directory.",
+        "---\ncompany: GitLab\ndate: 2017-01-31\ncomponent: PostgreSQL / Database\nseverity: Critical\nduration_minutes: 1080\n---",
+        "## Timeline\n- 17:20 UTC: Heavy database load caused replication lag to exceed threshold; replica dropped out of sync.\n- 23:00 UTC: Engineer wiped the pgdata directory on db1 by mistake, deleting ~300 GB of live data.\n- 23:15 UTC: Backup audit revealed pg_dump was failing silently due to binary version mismatch (9.2 vs 9.6).\n- 03:30 UTC (Feb 1): Recovery initiated from a 6-hour-old LVM snapshot taken manually before maintenance.",
+        "## Root Cause\nFollowing an aggressive spam attack that overloaded the database, replication lag between the primary PostgreSQL node (db1) and the secondary replica (db2) grew beyond 4 GB, breaking replication. While attempting to clear the stale PostgreSQL data directory on db2 to resynchronize replication, an on-call engineer mistakenly executed\nm -rf /var/opt/gitlab/postgresql/data on the primary server (db1) instead of the replica. Subsequent investigation revealed that all five automated backup mechanisms (pg_dump, LVM snapshots, S3 sync) had silently failed due to configuration mismatches and PostgreSQL version incompatibilities."
+      ],
+      "response": "Based on the provided excerpts, GitLab lost 6 hours of production database data because recovery was initiated from a 6-hour-old LVM snapshot taken manually before maintenance, after an engineer accidentally deleted the primary PostgreSQL data directory and all five automated backup mechanisms had silently failed.",
+      "reference": "An engineer accidentally ran rm -rf on the primary PostgreSQL data directory (db1) instead of the secondary replica (db2), and all five automated backup mechanisms had silently failed due to configuration mismatches and PostgreSQL version incompatibilities.",
+      "faithfulness": 0.75,
+      "answer_relevancy": NaN,
+      "context_precision": 0.249999999975
+    },
+    {
+      "user_input": "What action items did GitLab propose after the 2017 database outage?",
+      "retrieved_contexts": [
+        "# GitLab.com Production Database Outage (January 2017)  \n## Summary\nOn January 31, 2017, GitLab.com suffered an 18-hour outage accompanied by the permanent loss of approximately 6 hours of production database data (issues, merge requests, and comments) after an engineer accidentally deleted the primary PostgreSQL data directory.",
+        "---\ncompany: GitLab\ndate: 2017-01-31\ncomponent: PostgreSQL / Database\nseverity: Critical\nduration_minutes: 1080\n---",
+        "## Action Items\n- Configure distinct terminal prompts and color-coded SSH banners to differentiate primary and replica database hosts.\n- Implement continuous automated backup restoration testing and alerting on zero-byte backup artifacts.\n- Migrate database replication management to automated failover tooling (Patroni) to eliminate manual directory manipulation.",
+        "## Root Cause\nFollowing an aggressive spam attack that overloaded the database, replication lag between the primary PostgreSQL node (db1) and the secondary replica (db2) grew beyond 4 GB, breaking replication. While attempting to clear the stale PostgreSQL data directory on db2 to resynchronize replication, an on-call engineer mistakenly executed\nm -rf /var/opt/gitlab/postgresql/data on the primary server (db1) instead of the replica. Subsequent investigation revealed that all five automated backup mechanisms (pg_dump, LVM snapshots, S3 sync) had silently failed due to configuration mismatches and PostgreSQL version incompatibilities."
+      ],
+      "response": "Based on the provided excerpts, GitLab proposed the following action items:\n\n* Configure distinct terminal prompts and color-coded SSH banners to differentiate primary and replica database hosts.\n* Implement continuous automated backup restoration testing and alerting on zero-byte backup artifacts.\n* Migrate database replication management to automated failover tooling (Patroni) to eliminate manual directory manipulation.",
+      "reference": "GitLab proposed configuring distinct terminal prompts and color-coded SSH banners for primary and replica hosts, implementing automated backup restoration testing with alerts on zero-byte backups, and migrating replication management to Patroni.",
+      "faithfulness": 1.0,
+      "answer_relevancy": NaN,
+      "context_precision": 0.3333333333
+    },
+    {
+      "user_input": "What triggered the AWS US-EAST-1 network congestion event in December 2021?",
+      "retrieved_contexts": [
+        "# AWS US-EAST-1 Network Congestion Event (December 2021)  \n## Summary\nOn December 7, 2021, AWS experienced a 7.5-hour service disruption in the US-EAST-1 (Northern Virginia) region affecting EC2, DynamoDB, Lambda, and IAM control planes due to severe internal network congestion.",
+        "## Timeline\n- 15:30 UTC: Automated scaling event initiated high volume of state-service requests.\n- 15:45 UTC: Packet loss detected on border network devices; retry storms escalated congestion.\n- 18:10 UTC: Engineers identified the traffic source and began throttling scaling workflows.\n- 22:55 UTC: Network congestion cleared and all AWS control plane APIs returned to normal latency.",
+        "---\ncompany: AWS\ndate: 2021-12-07\ncomponent: Internal Network / Control Plane\nseverity: High\nduration_minutes: 450\n---",
+        "## Root Cause\nAn automated scaling activity triggered a surge of connection requests from client services hosted on the main AWS network to internal state-tracking services hosted on an isolated internal network. This sudden traffic spike overwhelmed the intermediate network devices bridging the two networks. The resulting packet loss caused clients to aggressively retry failed connections, creating a self-sustaining retry storm that saturated link capacity and prevented DNS resolution for internal service endpoints."
+      ],
+      "response": "Based on the provided excerpts, the event was triggered by an automated scaling activity that initiated a high volume of state-service requests (a surge of connection requests) from client services hosted on the main AWS network to internal state-tracking services hosted on an isolated internal network.",
+      "reference": "An automated scaling activity caused a surge of connection requests from the main AWS network to an isolated internal network, overwhelming border network devices and causing packet loss that triggered a self-sustaining retry storm.",
+      "faithfulness": 1.0,
+      "answer_relevancy": NaN,
+      "context_precision": 0.499999999975
+    },
+    {
+      "user_input": "What preventive measures were recommended to avoid retry storms in the AWS incident?",
+      "retrieved_contexts": [
+        "## Action Items\n- Implement adaptive backoff and jitter across all internal service clients to prevent retry storms.\n- Add strict rate limiting and circuit breaking on border routers connecting the main and internal networks.\n- Decouple critical control-plane health checks from congested internal DNS resolution paths.",
+        "## Timeline\n- 15:30 UTC: Automated scaling event initiated high volume of state-service requests.\n- 15:45 UTC: Packet loss detected on border network devices; retry storms escalated congestion.\n- 18:10 UTC: Engineers identified the traffic source and began throttling scaling workflows.\n- 22:55 UTC: Network congestion cleared and all AWS control plane APIs returned to normal latency.",
+        "## Root Cause\nAn automated scaling activity triggered a surge of connection requests from client services hosted on the main AWS network to internal state-tracking services hosted on an isolated internal network. This sudden traffic spike overwhelmed the intermediate network devices bridging the two networks. The resulting packet loss caused clients to aggressively retry failed connections, creating a self-sustaining retry storm that saturated link capacity and prevented DNS resolution for internal service endpoints.",
+        "# AWS US-EAST-1 Network Congestion Event (December 2021)  \n## Summary\nOn December 7, 2021, AWS experienced a 7.5-hour service disruption in the US-EAST-1 (Northern Virginia) region affecting EC2, DynamoDB, Lambda, and IAM control planes due to severe internal network congestion."
+      ],
+      "response": "Based on the provided excerpts, the recommended preventive measure is to **implement adaptive backoff and jitter across all internal service clients** to prevent retry storms.",
+      "reference": "Implementing adaptive backoff and jitter across internal clients, adding strict rate limiting and circuit breaking on border routers, and decoupling critical control-plane health checks from congested internal DNS paths.",
+      "faithfulness": 1.0,
+      "answer_relevancy": NaN,
+      "context_precision": 0.9999999999
+    }
+  ]
+}

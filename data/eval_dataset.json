@@ -1,0 +1,26 @@
+﻿[
+  {
+    "question": "What caused the global 502 Bad Gateway outage at Cloudflare in July 2019?",
+    "ground_truth": "A newly deployed WAF managed rule contained a poorly written regular expression that triggered catastrophic backtracking, causing edge server CPU utilization to spike to 100% and starving NGINX workers."
+  },
+  {
+    "question": "How long did the Cloudflare July 2019 outage last and how was it resolved?",
+    "ground_truth": "The outage lasted 27 minutes and was resolved by activating the global WAF kill-switch at 14:09 UTC."
+  },
+  {
+    "question": "Why did GitLab lose 6 hours of production database data in January 2017?",
+    "ground_truth": "An engineer accidentally ran rm -rf on the primary PostgreSQL data directory (db1) instead of the secondary replica (db2), and all five automated backup mechanisms had silently failed due to configuration mismatches and PostgreSQL version incompatibilities."
+  },
+  {
+    "question": "What action items did GitLab propose after the 2017 database outage?",
+    "ground_truth": "GitLab proposed configuring distinct terminal prompts and color-coded SSH banners for primary and replica hosts, implementing automated backup restoration testing with alerts on zero-byte backups, and migrating replication management to Patroni."
+  },
+  {
+    "question": "What triggered the AWS US-EAST-1 network congestion event in December 2021?",
+    "ground_truth": "An automated scaling activity caused a surge of connection requests from the main AWS network to an isolated internal network, overwhelming border network devices and causing packet loss that triggered a self-sustaining retry storm."
+  },
+  {
+    "question": "What preventive measures were recommended to avoid retry storms in the AWS incident?",
+    "ground_truth": "Implementing adaptive backoff and jitter across internal clients, adding strict rate limiting and circuit breaking on border routers, and decoupling critical control-plane health checks from congested internal DNS paths."
+  }
+]
